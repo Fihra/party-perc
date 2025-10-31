@@ -56,17 +56,41 @@ const drumKit = [snare, kick, hihat];
 
 let randomInstrument;
 
+let hihatImg;
+let kickImg;
+let snareImg;
+let imgLayer;
+
+let currentAlphaValue = 255;
+let mainAlpha = 255;
+
+function preload(){
+  hihatImg = loadImage("../assets/hihat_edit.png");
+  snareImg = loadImage("../assets/snare_drum_edit.png");
+  kickImg = loadImage("../assets/kick_drum.png");
+}
+
+function drumsetImages(){
+  image(snareImg, width/2 - 400, height/2, 350, 350);
+
+  image(kickImg, width/2 - 200, height/2, 350, 350);
+
+  image(hihatImg, width/2 + 25, height/2, 350, 350);
+}
+
 // set up the sketch canvas and socket connection,
 // including callback function for when the socket receives data.
 function setup() {
 
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(1200, 800);
   background(51);
 
   let randomNum = Math.floor(random(0,3));
   randomInstrument = drumKit[randomNum];
 
   console.log(randomInstrument);
+
+  drumsetImages();
 
   // sets up socket connection for communicating with server,
   // DO NOT DELETE!
@@ -83,7 +107,7 @@ function mouseDragged() {
   // name of message
   // data for that message
 
-    createCanvas(windowWidth, windowHeight);
+  createCanvas(1200, 800);
   background(51);
 
   // create an object for the data:
@@ -92,30 +116,35 @@ function mouseDragged() {
     y: mouseY
   };
 
- 
+   drumsetImages();
   // send the message
   socket.emit("drawCircle", data);
   // snare.triggerAttackRelease("8n", "+0.001"); 
 
   noStroke();
   fill(255);
-  ellipse(mouseX, mouseY, 36, 36);
+
+  // image(snareImg, mouseX, mouseY, 100, 100);
+  // ellipse(mouseX, mouseY, 36, 36);
 }
 
 // This function is called when the server sends this
 // client a message (see setup() function for where this is configured)
 function onDrawCircle(data) {
-      createCanvas(windowWidth, windowHeight);
+
+  createCanvas(1200, 800);
   background(51);
   // Input data (from server) processing here. --->
  
   console.log(data);
   // snare.triggerAttackRelease("8n", "+0.001"); 
-
+  drumsetImages();
   noStroke();
   // use both received color & coordinates
   fill(255, 0, 100);
-  ellipse(data.x, data.y, 36, 36);
+
+  // image(snareImg, mouseX, mouseY, 100, 100);
+  // ellipse(data.x, data.y, 36, 36);
 }
 
 function mousePressed(){
@@ -123,6 +152,9 @@ function mousePressed(){
   //  snare.triggerAttackRelease("8n", 0.05); 
 
   // console.log(randomInstrument);
+
+  // currentAlphaValue = 0;
+
   console.log(randomInstrument.getName());
 
   switch(randomInstrument.getName().toLowerCase()){
@@ -150,6 +182,8 @@ function mousePressed(){
 
 function draw() 
 {
+  // currentAlphaValue--;
+  // console.log("current value: ", currentAlphaValue);
 
   // if(mouseIsPressed === true){
   //     snare.triggerAttackRelease("8n", 0.05); 
