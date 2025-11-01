@@ -69,10 +69,6 @@ function preload(){
   hihatImg = loadImage("../assets/hihat_edit.png");
   snareImg = loadImage("../assets/snare_drum_edit.png");
   kickImg = loadImage("../assets/kick_drum.png");
-
-  snare.setImg(snareImg);
-  hihat.setImg(hihatImg);
-  kick.setImg(kickImg);
 }
 
 // set up the sketch canvas and socket connection,
@@ -85,6 +81,9 @@ function setup() {
   let randomNum = Math.floor(random(0,3));
   randomInstrument = drumKit[randomNum];
 
+  snare.setImg(snareImg);
+  hihat.setImg(hihatImg);
+  kick.setImg(kickImg);
   drumsetImages();
 
   // sets up socket connection for communicating with server,
