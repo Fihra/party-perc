@@ -74,7 +74,6 @@ function preload(){
 // set up the sketch canvas and socket connection,
 // including callback function for when the socket receives data.
 function setup() {
-
   createCanvas(1200, 800);
   background(51);
 
@@ -89,44 +88,8 @@ function setup() {
   // sets up socket connection for communicating with server,
   // DO NOT DELETE!
   socket.on("playSound", onPlaySound);
+  socket.on("clearTint", onClearTint);
 }
-
-// function mouseDragged() {
-//   // in this app, when the user clicks and drags the mouse,
-//   // we need to send their mouse data to the server to
-//   // broadcast to other connected clients.
-  
-//   // message needs 2 things:
-//   // name of message
-//   // data for that message
-  
-//   createCanvas(1200, 800);
-//   background(51);
-//      switch(randomInstrument.getName().toLowerCase()){
-//       case "hihat":
-//         // tint(50);
-//         image(hihat.getImg(), width/2 + 25, height/2, 350, 350);
-//         // noTint();
-//         image(kick.getImg(), width/2 - 200, height/2, 350, 350);
-//         image(snare.getImg(), width/2 - 400, height/2, 350, 350);
-//         break;
-//       case "kick":
-//         // tint(50);
-//         image(kick.getImg(), width/2 - 200, height/2, 350, 350);
-//         // noTint();
-//         image(hihat.getImg(), width/2 + 25, height/2, 350, 350);
-//         image(snare.getImg(), width/2 - 400, height/2, 350, 350);
-//       case "snare":
-//         // tint(50);
-//         image(snare.getImg(), width/2 - 400, height/2, 350, 350);
-//         // noTint();
-//         image(kick.getImg(), width/2 - 200, height/2, 350, 350);
-//         image(hihat.getImg(), width/2 + 25, height/2, 350, 350);
-//         break;
-//       default:
-//         break;
-//     }
-// }
 
 // This function is called when the server sends this
 // client a message (see setup() function for where this is configured)
@@ -138,10 +101,7 @@ function onPlaySound(data) {
   // Input data (from server) processing here. --->
  
   console.log(data);
-  // console.log(synth.getName());
- 
-
-   switch(randomInstrument.getName().toLowerCase()){
+   switch(data.mainInstrument){
       case "hihat":
         tint(50);
         image(hihat.getImg(), width/2 + 25, height/2, 350, 350);
@@ -177,16 +137,16 @@ function onPlaySound(data) {
 function mousePressed(){
   createCanvas(1200, 800);
   background(51);
-  isDarkened = true;
+
+  let mainInstrument = randomInstrument.getName().toLowerCase();
 
   let data = {
-    x: mouseX,
-    y: mouseY
-  };
+    mainInstrument: mainInstrument
+  }
 
   socket.emit("playSound", data);
 
-  switch(randomInstrument.getName().toLowerCase()){
+  switch(mainInstrument){
     case "kick":
         randomInstrument.playSynth("C1", "8n", "+0.001");
         break;
@@ -198,7 +158,7 @@ function mousePressed(){
         break;
   }
 
-  switch(randomInstrument.getName().toLowerCase()){
+  switch(mainInstrument){
   case "hihat":
     tint(50);
     image(hihat.getImg(), width/2 + 25, height/2, 350, 350);
@@ -229,35 +189,23 @@ function mousePressed(){
 }
 
 function mouseReleased(){
-  createCanvas(1200, 800);
-  background(51);
 
-  noTint();
-   switch(randomInstrument.getName().toLowerCase()){
-      case "hihat":
-        // tint(50);
-        image(hihat.getImg(), width/2 + 25, height/2, 350, 350);
-        // noTint();
-        image(kick.getImg(), width/2 - 200, height/2, 350, 350);
-        image(snare.getImg(), width/2 - 400, height/2, 350, 350);
-        break;
-      case "kick":
-        // tint(50);
-        image(kick.getImg(), width/2 - 200, height/2, 350, 350);
-        // noTint();
-        image(hihat.getImg(), width/2 + 25, height/2, 350, 350);
-        image(snare.getImg(), width/2 - 400, height/2, 350, 350);
-        break;
-      case "snare":
-        // tint(50);
-        image(snare.getImg(), width/2 - 400, height/2, 350, 350);
-        // noTint();
-        image(kick.getImg(), width/2 - 200, height/2, 350, 350);
-        image(hihat.getImg(), width/2 + 25, height/2, 350, 350);
-        break;
-      default:
-        break;
-    }
+  let data = {
+    test: "test"
+  }
+
+  socket.emit("clearTint", data);
+}
+
+function onClearTint(data){
+    console.log(data);
+    createCanvas(1200, 800);
+    background(51);
+
+    noTint();
+    image(snare.getImg(), width/2 - 400, height/2, 350, 350);
+    image(kick.getImg(), width/2 - 200, height/2, 350, 350);
+    image(hihat.getImg(), width/2 + 25, height/2, 350, 350);
 
   noStroke();
   fill(255);
