@@ -66,9 +66,9 @@ function drumsetImages(){
 }
 
 function preload(){
-  hihatImg = loadImage("../assets/hihat_edit.png");
-  snareImg = loadImage("../assets/snare_drum_edit.png");
-  kickImg = loadImage("../assets/kick_drum.png");
+  hihatImg = loadImage("assets/hihat_edit.png");
+  snareImg = loadImage("assets/snare_drum_edit.png");
+  kickImg = loadImage("assets/kick_drum.png");
 }
 
 // set up the sketch canvas and socket connection,
