@@ -2,23 +2,22 @@ class Instrument {
     constructor(name, synth){
         this.name = name;
         this.synth = synth;
+        this.img = '';
     }
 
     getName(){
         return this.name;
     }
 
-    playSynth(note, duration, nextTime = "+0.001"){
-
-        console.log(nextTime);
-
-        if(nextTime){
-            
-            this.synth.triggerAttackRelease(note, duration, nextTime);
-        } else{
-
-        }
-        this.synth.triggerAttackRelease(note, duration)
+    setImg(newImg){
+        this.img = newImg;
     }
 
+    getImg(){
+        return this.img;
+    }
+
+    playSynth(note, duration, nextTime = "+0.001"){
+        this.synth.triggerAttackRelease(note, duration);
+    }
 }
