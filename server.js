@@ -16,6 +16,13 @@ io.sockets.on('connection', (socket) => {
   
   // define handlers for events we expect to receive
   socket.on('playSound', (data) => {
+    console.log("Data: ",  data);
     io.emit('playSound', data);
   })
+
+  socket.on('clearTint', (data) => {
+    console.log("other side: ", data);
+    io.emit("clearTint",  data);
+  })
+
 });
