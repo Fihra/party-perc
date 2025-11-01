@@ -138,28 +138,28 @@ function onPlaySound(data) {
   // Input data (from server) processing here. --->
  
   console.log(data);
-  console.log(synth.getName());
+  // console.log(synth.getName());
  
 
    switch(randomInstrument.getName().toLowerCase()){
       case "hihat":
-        // tint(50);
+        tint(50);
         image(hihat.getImg(), width/2 + 25, height/2, 350, 350);
-        // noTint();
+        noTint();
         image(kick.getImg(), width/2 - 200, height/2, 350, 350);
         image(snare.getImg(), width/2 - 400, height/2, 350, 350);
         break;
       case "kick":
-        // tint(50);
+        tint(50);
         image(kick.getImg(), width/2 - 200, height/2, 350, 350);
-        // noTint();
+        noTint();
         image(hihat.getImg(), width/2 + 25, height/2, 350, 350);
         image(snare.getImg(), width/2 - 400, height/2, 350, 350);
         break;
       case "snare":
-        // tint(50);
+        tint(50);
         image(snare.getImg(), width/2 - 400, height/2, 350, 350);
-        // noTint();
+        noTint();
         image(kick.getImg(), width/2 - 200, height/2, 350, 350);
         image(hihat.getImg(), width/2 + 25, height/2, 350, 350);
         break;
