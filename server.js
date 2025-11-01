@@ -15,7 +15,7 @@ io.sockets.on('connection', (socket) => {
   console.log("new connection: " + socket.id);
   
   // define handlers for events we expect to receive
-  socket.on('drawCircle', (data) => {
-    io.emit('drawCircle', data);
+  socket.on('playSound', (data) => {
+    io.emit('playSound', data);
   })
 });
