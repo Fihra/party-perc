@@ -85,6 +85,9 @@ function setup() {
   kick.setImg(kickImg);
   drumsetImages();
 
+  console.log("My instrument: ", randomInstrument);
+
+  Tone.start();
   // sets up socket connection for communicating with server,
   // DO NOT DELETE!
   socket.on("playSound", onPlaySound);
@@ -100,7 +103,23 @@ function onPlaySound(data) {
   background(51);
   // Input data (from server) processing here. --->
  
-  console.log(data);
+    console.log(randomInstrument);
+  // console.log(data);
+
+  switch(data.mainInstrument){
+    case "kick":
+        randomInstrument.playSynth("C1", "8n", "+0.01");
+        break;
+    case "snare":
+        randomInstrument.playSynth("8n", "+0.1");
+        break;
+    case "hihat":
+        randomInstrument.playSynth("8n", "+0.1");
+        break;
+    default:
+        break;
+  }
+
    switch(data.mainInstrument){
       case "hihat":
         tint(50);
@@ -125,8 +144,6 @@ function onPlaySound(data) {
         break;
       default:
         break;
-
-
     }
 
   noStroke();
@@ -141,55 +158,54 @@ function mousePressed(){
   let mainInstrument = randomInstrument.getName().toLowerCase();
 
   let data = {
-    mainInstrument: mainInstrument
+    mainInstrument: mainInstrument,
   }
 
   socket.emit("playSound", data);
 
-  switch(mainInstrument){
-    case "kick":
-        randomInstrument.playSynth("C1", "8n", "+0.001");
-        break;
-    case "snare":
-    case "hihat":
-        randomInstrument.playSynth("8n", "+0.1");
-        break;
-    default:
-        break;
-  }
+  // switch(mainInstrument){
+  //   case "kick":
+  //       randomInstrument.playSynth("C1", "8n", "+0.001");
+  //       break;
+  //   case "snare":
+  //   case "hihat":
+  //       randomInstrument.playSynth("8n", "+0.1");
+  //       break;
+  //   default:
+  //       break;
+  // }
 
-  switch(mainInstrument){
-  case "hihat":
-    tint(50);
-    image(hihat.getImg(), width/2 + 25, height/2, 350, 350);
-    noTint();
-    image(kick.getImg(), width/2 - 200, height/2, 350, 350);
-    image(snare.getImg(), width/2 - 400, height/2, 350, 350);
-    break;
-  case "kick":
-    tint(50);
-    image(kick.getImg(), width/2 - 200, height/2, 350, 350);
-    noTint();
-    image(hihat.getImg(), width/2 + 25, height/2, 350, 350);
-    image(snare.getImg(), width/2 - 400, height/2, 350, 350);
-    break;
-  case "snare":
-    tint(50);
-    image(snare.getImg(), width/2 - 400, height/2, 350, 350);
-    noTint();
-    image(kick.getImg(), width/2 - 200, height/2, 350, 350);
-    image(hihat.getImg(), width/2 + 25, height/2, 350, 350);
-    break;
-  default:
-    break;
-  }
+  // switch(mainInstrument){
+  // case "hihat":
+  //   tint(50);
+  //   image(hihat.getImg(), width/2 + 25, height/2, 350, 350);
+  //   noTint();
+  //   image(kick.getImg(), width/2 - 200, height/2, 350, 350);
+  //   image(snare.getImg(), width/2 - 400, height/2, 350, 350);
+  //   break;
+  // case "kick":
+  //   tint(50);
+  //   image(kick.getImg(), width/2 - 200, height/2, 350, 350);
+  //   noTint();
+  //   image(hihat.getImg(), width/2 + 25, height/2, 350, 350);
+  //   image(snare.getImg(), width/2 - 400, height/2, 350, 350);
+  //   break;
+  // case "snare":
+  //   tint(50);
+  //   image(snare.getImg(), width/2 - 400, height/2, 350, 350);
+  //   noTint();
+  //   image(kick.getImg(), width/2 - 200, height/2, 350, 350);
+  //   image(hihat.getImg(), width/2 + 25, height/2, 350, 350);
+  //   break;
+  // default:
+  //   break;
+  // }
 
   noStroke();
   fill(255);
 }
 
 function mouseReleased(){
-
   let data = {
     test: "test"
   }
