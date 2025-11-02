@@ -17,7 +17,13 @@ class Instrument {
         return this.img;
     }
 
-    playSynth(note, duration, nextTime = "+0.001"){
-        this.synth.triggerAttackRelease(note, duration);
+    playSynth(note, duration, nextTime){
+        console.log(nextTime);
+        if(nextTime === undefined){
+            this.synth.triggerAttackRelease(note, duration);
+        } else {
+            this.synth.triggerAttackRelease(note, duration, Tone.now() + 0.01);
+        }
+        
     }
 }
